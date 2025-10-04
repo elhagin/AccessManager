@@ -1,0 +1,122 @@
+openapi: 3.0.3
+info:
+  title: Access Manager API
+  version: 1.0.0
+  description: API for managing access tokens across services.
+servers:
+  - url: http://localhost:4000
+paths:
+  '/':
+    get:
+      summary: Health check
+      operationId: getHealth
+      responses:
+        '200':
+          description: Backend health response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Access Manager backend is running
+  /api/tokens:
+    get:
+      summary: List access tokens
+      operationId: listTokens
+      responses:
+        '200':
+          description: List of tokens
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tokens:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AccessToken'
+  '/api/tokens/{id}/renew':
+    post:
+      summary: Renew a token
+      operationId: renewToken
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Token identifier to renew
+      responses:
+        '200':
+          description: Token renewed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RenewTokenResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Authorization error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Token not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    AccessToken:
+      type: object
+      properties:
+        id:
+          type: string
+          example: token-1
+        serviceName:
+          type: string
+          example: GitHub API
+        token:
+          type: string
+          example: github-8f3f12a9d7
+        expiryDate:
+          type: string
+          format: date-time
+          example: '2025-12-01T12:00:00.000Z'
+        status:
+          type: string
+          enum: [active, expired, expiring_soon]
+          example: active
+    RenewTokenResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Token renewed successfully
+        token:
+          $ref: '#/components/schemas/AccessToken'
+        renewalToken:
+          type: string
+          description: Newly issued JWT for future renew requests
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Token not found
+
