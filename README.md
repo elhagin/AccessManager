@@ -51,7 +51,7 @@ Key variables:
   - `JWT_SECRET`: Secret used to sign renewal JWTs **(required)**
   - `RENEWAL_DURATION_DAYS`: Days added on renew (defaults to 90)
 - `frontend/.env`
-  - `NEXT_PUBLIC_API_BASE_URL`: URL pointing to the backend (defaults to `http://localhost:4100`)
+  - `NEXT_PUBLIC_API_BASE_URL`: URL pointing to the backend (defaults to `http://localhost:4000`)
 
 ### 4. Run the development servers
 
