@@ -50,6 +50,15 @@ cd frontend
 npm run dev
 ```
 
+When testing token renewal, you need a JWT signed with the backend secret. Generate one locally (replace the token id as needed):
+
+```bash
+cd backend
+node -e "const jwt=require('jsonwebtoken');console.log(jwt.sign({ tokenId: 'token-1' }, process.env.JWT_SECRET || 'replace-with-secure-secret', { expiresIn: '90d' }));"
+```
+
+Paste the resulting token into the frontend renew modal; the UI will handle the `Bearer` prefix.
+
 ## Available Scripts
 
 ### Frontend (`frontend/`)
