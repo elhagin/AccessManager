@@ -2,6 +2,7 @@
 
 import { AccessToken } from '../lib/api';
 import { ExpiryFilter } from '../lib/filters';
+import styles from '../styles/formControls.module.css';
 
 interface FiltersBarProps {
   tokens: AccessToken[];
@@ -22,7 +23,7 @@ export function FiltersBar({ tokens, serviceFilter, expiryFilter, onServiceChang
           <select
             value={serviceFilter}
             onChange={(event) => onServiceChange(event.target.value)}
-            className="mt-1 w-48 rounded-md border border-gray-400 bg-transparent px-3 py-2 text-sm font-medium text-gray-700 transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 hover:border-blue-400"
+            className={styles.select}
           >
             {services.map((service) => (
               <option key={service} value={service}>
@@ -37,7 +38,7 @@ export function FiltersBar({ tokens, serviceFilter, expiryFilter, onServiceChang
           <select
             value={expiryFilter}
             onChange={(event) => onExpiryChange(event.target.value as ExpiryFilter)}
-            className="mt-1 w-48 rounded-md border border-gray-400 bg-transparent px-3 py-2 text-sm font-medium text-gray-700 transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 hover:border-blue-400"
+            className={styles.select}
           >
             <option value="all">All statuses</option>
             <option value="active">Active</option>

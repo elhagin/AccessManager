@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { AccessToken, renewToken } from '../lib/api';
+import styles from '../styles/formControls.module.css';
 
 interface RenewTokenModalProps {
   token: AccessToken | null;
@@ -90,7 +91,7 @@ export function RenewTokenModal({ token, open, onClose, onRenew }: RenewTokenMod
             </label>
             <textarea
               id="authToken"
-              className="mt-1 w-full rounded-md border border-gray-300 bg-gray-50 p-3 text-sm font-mono text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className={`${styles.textarea} font-mono`}
               rows={4}
               value={authToken}
               onChange={(event) => setAuthToken(event.target.value)}
